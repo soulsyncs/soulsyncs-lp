@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXソリューション事業 | 株式会社ソウルシンクス</title>
+  <meta name="description" content="30点の試作を持って、あなたの現場に入ります。中小企業の業務変革をAI×伴走スタイルで支援。完璧を待たず、一緒に120点を目指します。">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .hero-animate { opacity:0; transform:translateY(30px); transition:opacity .8s ease,transform .8s ease; }
+
+    /* Tab Styles */
+    .tab-buttons {
+      display: flex;
+      gap: 0;
+      margin-bottom: 40px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 2px solid var(--border);
+      width: fit-content;
+    }
+    .tab-btn {
+      padding: 14px 32px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      background: var(--white);
+      color: var(--text-light);
+      border: none;
+      transition: var(--transition);
+      letter-spacing: 0.05em;
+    }
+    .tab-btn.active {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .tab-btn:hover:not(.active) {
+      background: var(--bg);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Industry Card */
+    .industry-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 48px;
+      box-shadow: var(--shadow-sm);
+    }
+    .industry-card__symptom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .industry-symptom {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+      padding: 12px 16px;
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+    }
+    .industry-symptom::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C13530' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat;
+      margin-top: 1px;
+    }
+
+    /* Before/After */
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 24px;
+      align-items: center;
+      margin-top: 40px;
+    }
+    .before-box, .after-box {
+      border-radius: var(--radius-md);
+      padding: 32px;
+      text-align: center;
+    }
+    .before-box {
+      background: #fef2f2;
+      border: 2px solid #fecaca;
+    }
+    .after-box {
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+    }
+    .before-box__label, .after-box__label {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .before-box__label { color: #ef4444; }
+    .after-box__label  { color: #22c55e; }
+    .before-box__title, .after-box__title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .before-box__title { color: #ef4444; }
+    .after-box__title  { color: #22c55e; }
+    .ba-arrow {
+      font-size: 32px;
+      color: var(--teal);
+    }
+
+    /* Root Cause */
+    .root-cause-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 60px;
+    }
+    .root-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 40px 32px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .root-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .root-card__num {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--navy), #252525);
+      color: var(--white);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+    .root-card__title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .root-card__desc {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .root-card__solution {
+      padding: 16px;
+      background: rgba(193,53,48,0.06);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--teal);
+      font-size: 13px;
+      color: var(--teal);
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    /* Order diagram */
+    .order-diagram {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 40px 48px;
+      box-shadow: var(--shadow-sm);
+      margin-top: 52px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .order-diagram__title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .order-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .order-step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .order-step:last-child { border-bottom: none; }
+    .order-step__num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .order-step__text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .order-step__arrow {
+      margin-left: auto;
+      color: var(--border);
+      font-size: 20px;
+    }
+    .order-warning {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--coral);
+      font-weight: 700;
+    }
+
+    /* Case Story */
+    .case-story {
+      background: var(--white);
+    }
+    .case-timeline {
+      margin-top: 60px;
+    }
+    .case-phase {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 32px;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .case-phase::before {
+      content: '';
+      position: absolute;
+      left: 68px;
+      top: 52px;
+      bottom: -40px;
+      width: 2px;
+      background: var(--border);
+    }
+    .case-phase:last-child::before { display: none; }
+    .case-phase__label {
+      text-align: center;
+    }
+    .case-phase__icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin: 0 auto 8px;
+    }
+    .case-phase__icon--before { background: #fef2f2; }
+    .case-phase__icon--diag   { background: rgba(193,53,48,0.1); }
+    .case-phase__icon--after  { background: #f0fdf4; }
+    .case-phase__name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-align: center;
+    }
+    .case-phase__content {
+      background: var(--bg);
+      border-radius: var(--radius-md);
+      padding: 32px;
+    }
+    .case-phase__title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .case-phase__items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .case-phase__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .case-phase__item-icon {
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Testimonial */
+    .testimonial {
+      background: linear-gradient(135deg, var(--navy) 0%, #252525 100%);
+      border-radius: var(--radius-lg);
+      padding: 52px;
+      margin-top: 48px;
+      position: relative;
+    }
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: 20px;
+      left: 40px;
+      font-size: 120px;
+      color: rgba(255,255,255,0.06);
+      font-family: serif;
+      line-height: 1;
+    }
+    .testimonial__text {
+      font-size: 18px;
+      line-height: 2;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .testimonial__source {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      text-align: right;
+    }
+
+    /* ROI Box */
+    .roi-box {
+      background: linear-gradient(135deg, rgba(193,53,48,0.08), rgba(193,53,48,0.15));
+      border: 2px solid rgba(193,53,48,0.2);
+      border-radius: var(--radius-md);
+      padding: 40px;
+      margin-top: 40px;
+    }
+    .roi-box__title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      margin-bottom: 24px;
+    }
+    .roi-numbers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .roi-item__num {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .roi-item__label {
+      font-size: 13px;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+
+    @media(max-width:768px){
+      .before-after { grid-template-columns:1fr; }
+      .ba-arrow { transform:rotate(90deg); }
+      .root-cause-grid { grid-template-columns:1fr; }
+      .case-phase { grid-template-columns:1fr; }
+      .case-phase::before { display:none; }
+      .roi-numbers { grid-template-columns:1fr; }
+      .industry-card__symptom-grid { grid-template-columns:1fr; }
+      .tab-buttons { width:100%; }
+      .tab-btn { flex:1; padding:12px 16px; font-size:13px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <img src="images/logo.png" alt="Soul Sync's 株式会社ソウルシンクス" class="nav__logo-img">
+      </a>
+      <ul class="nav__links">
+        <li><a href="index.html" class="nav__link">トップ</a></li>
+        <li><a href="ax.html" class="nav__link">AXソリューション</a></li>
+        <li><a href="renk.html" class="nav__link">Re:nk</a></li>
+        <li><a href="about.html" class="nav__link">会社概要</a></li>
+        <li><a href="contact.html" class="nav__cta">お問い合わせ</a></li>
+      </ul>
+      <button class="nav__hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     1. HERO
+     ============================================================ -->
+<section class="hero hero--ax">
+  <div class="hero__bg">
+    <div class="hero__bg-grid"></div>
+    <div class="hero__bg-glow hero__bg-glow--1"></div>
+    <div class="hero__bg-glow hero__bg-glow--2"></div>
+  </div>
+  <div class="container">
+    <div class="hero__content">
+      <p class="hero__label hero-animate">AX Solution</p>
+      <h1 class="hero__title hero-animate">
+        完璧を作ってから、<br>
+        納品する会社では<br>
+        <em>ありません。</em>
+      </h1>
+      <p class="hero__company hero-animate" style="font-size:16px;opacity:.8;max-width:560px;line-height:1.9;">
+        30点の試作を持って、あなたの現場に入ります。<br>
+        開発中も、運用後も、ずっと隣で一緒に考える。<br>
+        それが、ソウルシンクスの「伴走」という仕事です。
+      </p>
+      <div class="hero__cta hero-animate">
+        <a href="contact.html?type=ax" class="btn btn--primary btn--lg">初回相談（無料・90分）</a>
+        <a href="#process" class="btn btn--outline btn--lg">伴走の進め方を見る ↓</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     2. INDUSTRY CHALLENGES
+     ============================================================ -->
+<section class="section" style="background:var(--bg);">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">INDUSTRY CHALLENGES</p>
+      <h2 class="section-title">あなたの業界の、<br>見えない壁。</h2>
+      <p class="section-desc" style="margin-bottom:40px;">業界は違っても、根本原因は同じです。<br>あなたの現場に当てはまるものを選んでください。</p>
+    </div>
+
+    <div data-tab-group class="reveal delay-2">
+      <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="bpo">BPO・人材サービス業</button>
+        <button class="tab-btn" data-tab="mfg">製造業</button>
+        <button class="tab-btn" data-tab="svc">サービス業</button>
+      </div>
+
+      <!-- BPO -->
+      <div data-tab-content="bpo" class="tab-content active">
+        <div class="industry-card">
+          <h3 class="section-title" style="font-size:24px;">「70名の壁」を超えられない</h3>
+          <p class="section-desc">
+            事業が拡大して従業員が70名を超えたあたりから、<strong style="color:var(--navy);">「誰が」「何を」「どこまで進めているか」が、見えなくなる。</strong><br><br>
+            進捗会議で報告を聞いても、結局、現場で何が起きているのか経営者にはわからない。これが、BPO事業の「見えない壁」です。
+          </p>
+          <div class="industry-card__symptom-grid">
+            <div class="industry-symptom">案件ごとの進捗がバラバラに管理されている</div>
+            <div class="industry-symptom">メンバーごとに「完了」の定義が違う</div>
+            <div class="industry-symptom">問題が起きても、後から気づく</div>
+            <div class="industry-symptom">データはあるが、入力が属人的で信頼できない</div>
+          </div>
+          <div class="before-after" style="margin-top:40px;">
+            <div class="before-box">
+              <div class="before-box__label">Before</div>
+              <div class="before-box__title">Black Box</div>
+              <p style="font-size:13px;color:#ef4444;">経営者 ←（？）→ 現場<br>進捗会議で報告は聞くが実態が見えない</p>
+            </div>
+            <div class="ba-arrow">→</div>
+            <div class="after-box">
+              <div class="after-box__label">After</div>
+              <div class="after-box__title">Crystal Clear</div>
+              <p style="font-size:13px;color:#22c55e;">経営者 ←（見える）→ 現場<br>リアルタイムで状況を把握、問題を早期発見</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manufacturing -->
+      <div data-tab-content="mfg" class="tab-content">
+        <div class="industry-card">
+          <h3 class="section-title" style="font-size:24px;">「品質のバラつき」が減らない</h3>
+          <p class="section-desc">
+            ベテランと若手で仕上がりが全然違う。マニュアルはあるけれど、<strong style="color:var(--navy);">暗黙知が多すぎて若手が覚えきれない。</strong>これが、製造業の「見えない壁」です。
+          </p>
+          <div class="industry-card__symptom-grid">
+            <div class="industry-symptom">ベテランの「勘」に頼っている</div>
+            <div class="industry-symptom">不良品が出ても原因特定に時間がかかる</div>
+            <div class="industry-symptom">若手の教育に時間がかかりすぎる</div>
+            <div class="industry-symptom">データはあるが、活用されていない</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service -->
+      <div data-tab-content="svc" class="tab-content">
+        <div class="industry-card">
+          <h3 class="section-title" style="font-size:24px;">「顧客の声」が活かされない</h3>
+          <p class="section-desc">
+            お客様アンケートは取っているが、結局、Excelに眠っている。<strong style="color:var(--navy);">現場スタッフは「またアンケートか」と感じている。</strong>これが、サービス業の「見えない壁」です。
+          </p>
+          <div class="industry-card__symptom-grid">
+            <div class="industry-symptom">アンケート結果が集計されるだけで終わる</div>
+            <div class="industry-symptom">現場へのフィードバックがない</div>
+            <div class="industry-symptom">改善につながる仕組みがない</div>
+            <div class="industry-symptom">データはあるが意思決定に使われない</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     3. ROOT CAUSE DIAGNOSIS
+     ============================================================ -->
+<section class="section" style="background:var(--white);">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">ROOT CAUSE</p>
+      <h2 class="section-title">「見えない」の、<br>本当の理由。</h2>
+      <p class="section-desc">業界を問わず、根本原因はこの3つです。これを解決すれば「見えない壁」は消えます。</p>
+    </div>
+
+    <div class="root-cause-grid">
+      <div class="root-card reveal delay-1">
+        <div class="root-card__num">1</div>
+        <h3 class="root-card__title">情報の点在</h3>
+        <p class="root-card__desc">
+          Excel、Slack、メール、スプレッドシート…<br>情報があちこちに散らばっている。<br>情報を探すだけで年間120時間のロス。
+        </p>
+        <div class="root-card__solution">
+          解決策：全ての情報を1か所に集約する<br>「正本（Single Source of Truth）」を作る
+        </div>
+      </div>
+      <div class="root-card reveal delay-2">
+        <div class="root-card__num">2</div>
+        <h3 class="root-card__title">言葉の定義ズレ</h3>
+        <p class="root-card__desc">
+          Aさんの「完了」＝納品済み<br>Bさんの「完了」＝請求書発行済み<br>同じ言葉なのに意味が違う。
+        </p>
+        <div class="root-card__solution">
+          解決策：「完了」「進行中」「保留」の定義を<br>全員で合意し、システムに落とし込む
+        </div>
+      </div>
+      <div class="root-card reveal delay-3">
+        <div class="root-card__num">3</div>
+        <h3 class="root-card__title">入力の負荷</h3>
+        <p class="root-card__desc">
+          現場は忙しい。データ入力は後回しになる。<br>結果、データが古くて使えない。<br>リアルタイムで判断できない。
+        </p>
+        <div class="root-card__solution">
+          解決策：自動化できるものは自動化。<br>入力時間を1日10分→3分に削減
+        </div>
+      </div>
+    </div>
+
+    <div class="order-diagram reveal delay-3">
+      <div class="order-diagram__title">解決の順序（これが最短ルート）</div>
+      <div class="order-steps">
+        <div class="order-step"><div class="order-step__num">1</div><div class="order-step__text">情報を1か所に集める（正本づくり）</div></div>
+        <div class="order-step"><div class="order-step__num">2</div><div class="order-step__text">言葉の定義を揃える</div></div>
+        <div class="order-step"><div class="order-step__num">3</div><div class="order-step__text">入力負荷を下げる</div></div>
+        <div class="order-step"><div class="order-step__num">4</div><div class="order-step__text">その上で AI を使う</div></div>
+      </div>
+      <p class="order-warning"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;display:inline-block;margin-right:4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Step 4から始めると、失敗します</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. HONESTY PROOF
+     ============================================================ -->
+<section class="section" style="background:var(--bg);" id="honesty">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto 0;">
+      <p class="section-label">HONESTY PROOF</p>
+      <h2 class="section-title">「信頼」ではなく、<br>「誠実さ」を証明します。</h2>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-card reveal delay-1">
+        <div class="proof-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C13530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3 class="proof-card__title">「できません」も<br>正直に言います</h3>
+        <p class="proof-card__desc">「AIで全部解決」なんて、嘘です。できることと、できないことを最初に明確にします。過大な期待を持たせるより、正直に向き合う方が長く続く関係を作れます。</p>
+        <div class="proof-card__example">
+          「営業トークの完全自動化は難しいです。でも、顧客リストの整理とアプローチタイミングの提案なら今すぐできます。まず、そこから始めて効果を見てみませんか？」
+        </div>
+      </div>
+      <div class="proof-card reveal delay-2">
+        <div class="proof-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C13530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+        <h3 class="proof-card__title">未完成を<br>恐れません</h3>
+        <p class="proof-card__desc">「完璧になってから見せる」は時間の無駄です。30点の試作を見せて、あなたの反応を聞いて、一緒に120点に育てます。2週間ごとに触ってもらい、「違う」と思ったらすぐ修正。</p>
+        <div class="proof-card__example">
+          初回デモは、ボタンが3つだけ。でも、その3つを一緒に押しながら「ここがもっとこうなると良い」と話し合いました。2週間後、「これだよ！」と言ってもらえました。
+        </div>
+      </div>
+      <div class="proof-card reveal delay-3">
+        <div class="proof-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C13530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg></div>
+        <h3 class="proof-card__title">「納品して終わり」には<br>絶対にしません</h3>
+        <p class="proof-card__desc">システムは動いても、人が動かなければ意味がない。運用開始後の1ヶ月が勝負です。現場の困りごとに即対応し、使い方の変化にも柔軟に。私たちは、ずっと一緒にいます。</p>
+        <div class="proof-card__example">
+          運用開始3日目「思ったより使われていない」→現場に行くと「ログイン方法がわからない」の声が多数。その場でマニュアルを一緒に作成。翌週から利用率が5倍になりました。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. CASE STORY - 森園様
+     ============================================================ -->
+<section class="section case-story">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">CASE STORY</p>
+      <h2 class="section-title">BPO事業の実例：<br>「70名の壁」をどう越えたか。</h2>
+    </div>
+
+    <div class="case-timeline reveal delay-1">
+      <!-- Before -->
+      <div class="case-phase">
+        <div class="case-phase__label">
+          <div class="case-phase__icon case-phase__icon--before"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="case-phase__name">Before</div>
+        </div>
+        <div class="case-phase__content">
+          <h3 class="case-phase__title">経営者が抱えていた3つの悩み</h3>
+          <div class="case-phase__items">
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>「進捗会議で報告は聞くけど、本当に大丈夫なのか、わからない」</div>
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>「問題が起きてから気づく。もっと早く知りたかった」</div>
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>「データはあるはずなのに、意思決定に使えない」</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnosis -->
+      <div class="case-phase">
+        <div class="case-phase__label">
+          <div class="case-phase__icon case-phase__icon--diag"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C13530" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <div class="case-phase__name">診断</div>
+        </div>
+        <div class="case-phase__content">
+          <h3 class="case-phase__title">現場に入って、わかったこと</h3>
+          <div class="case-phase__items">
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C13530" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span>案件管理がExcel／進捗報告がSlack／クライアント連絡がメール → 3か所見ないと全体がわからない</div>
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C13530" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Aさんの「完了」＝納品済み、Bさんの「完了」＝請求書発行 → 報告の信頼性が低い</div>
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C13530" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>現場は忙しく入力は後回し → データが古くてリアルタイム判断できない</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- After -->
+      <div class="case-phase">
+        <div class="case-phase__label">
+          <div class="case-phase__icon case-phase__icon--after"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="case-phase__name">After</div>
+        </div>
+        <div class="case-phase__content">
+          <h3 class="case-phase__title">3ヶ月後、手に入れたもの</h3>
+          <div class="case-phase__items">
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>朝、システムを開けば全案件の状況が一目でわかる</div>
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>問題案件が赤で表示され、早期に対応できる</div>
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>来月の売上予測が見えて、経営判断がスピードアップ</div>
+            <div class="case-phase__item"><span class="case-phase__item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>データ入力時間が1日10分 → 3分に削減</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roi-box reveal delay-2">
+      <div class="roi-box__title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;display:inline-block;margin-right:6px;"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> 投資対効果（ROI）</div>
+      <div class="roi-numbers">
+        <div class="roi-item">
+          <div class="roi-item__num"><span data-target="70" data-suffix="%">0%</span></div>
+          <div class="roi-item__label">データ入力時間の削減率<br>（10分→3分）</div>
+        </div>
+        <div class="roi-item">
+          <div class="roi-item__num"><span data-target="32" data-suffix="万円/月">0万円/月</span></div>
+          <div class="roi-item__label">コスト削減効果<br>（70名×7分×20日×時給2,000円）</div>
+        </div>
+        <div class="roi-item">
+          <div class="roi-item__num"><span data-target="4" data-suffix="ヶ月">0ヶ月</span></div>
+          <div class="roi-item__label">投資回収期間の目安</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial reveal delay-3">
+      <p class="testimonial__text">
+        「最初は、正直、半信半疑でした。<br>
+        『30点の試作を見せる』と言われて、大丈夫かな？と。<br><br>
+        でも、2週間後に触れる状態を見せてもらって、<br>
+        『あ、これ使えそう』と思えました。<br>
+        そこから、2週間ごとに『ここが欲しい』と伝えると、<br>
+        次の打ち合わせで実装されている。<br><br>
+        今では、朝一番にこのシステムを開くのが日課になっています。」
+      </p>
+      <p class="testimonial__source">— BPO事業 代表取締役</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     6. DIFFERENTIATION
+     ============================================================ -->
+<section class="section" style="background:var(--bg);">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">DIFFERENTIATION</p>
+      <h2 class="section-title">一般的な開発会社と、<br>何が違うのか？</h2>
+    </div>
+    <div class="diff-table-wrapper reveal delay-1">
+      <table class="diff-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>一般的な開発会社</th>
+            <th>ソウルシンクス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>提案の入り方</td><td>「AIで解決します」</td><td>「現場を見せてください」</td></tr>
+          <tr><td>最初にやること</td><td>要件定義（3ヶ月）</td><td>根本原因の診断（2週間）</td></tr>
+          <tr><td>開発の順序</td><td>いきなりAI導入</td><td>正本づくり → その上でAI</td></tr>
+          <tr><td>進捗の見せ方</td><td>完成まで見せない</td><td>2週間ごとに触ってもらう</td></tr>
+          <tr><td>修正対応</td><td>仕様変更は追加費用</td><td>一緒に育てる前提（柔軟）</td></tr>
+          <tr><td>納品後</td><td>基本的に終了</td><td>運用後も隣で伴走</td></tr>
+          <tr><td>できないこと</td><td>曖昧にしがち</td><td>最初に正直に言う</td></tr>
+          <tr><td>関係性</td><td>発注者 vs 受注者</td><td>伴走パートナー</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     7. PROCESS
+     ============================================================ -->
+<section class="section" style="background:var(--white);" id="process">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">PROCESS</p>
+      <h2 class="section-title">「どう始まって、<br>どう続くのか」を<br>先にお伝えします。</h2>
+    </div>
+
+    <div class="process-timeline">
+      <div class="process-step reveal delay-1">
+        <div class="process-step__num">1</div>
+        <div class="process-step__content">
+          <div class="process-step__period">Week 1</div>
+          <h3 class="process-step__title">初回対話（無料・90分）</h3>
+          <p class="process-step__desc">まず、お互いを知るための時間。ヒアリング、根本原因の仮説出し、「やらない」という選択肢の提示まで。</p>
+          <div class="process-step__items">
+            <div class="process-step__item">今、何に困っているか</div>
+            <div class="process-step__item">「見えない」の正体は何か</div>
+            <div class="process-step__item">できること / できないことの正直な判断</div>
+            <div class="process-step__item">「やらない」も選択肢として提示</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal delay-1">
+        <div class="process-step__num">2</div>
+        <div class="process-step__content">
+          <div class="process-step__period">Week 2</div>
+          <h3 class="process-step__title">現場診断（1日）</h3>
+          <p class="process-step__desc">実際に現場に入り、根本原因を特定します。診断レポートと解決策・見積もりを提示。</p>
+          <div class="process-step__items">
+            <div class="process-step__item">現場訪問・実際に働く人と対話</div>
+            <div class="process-step__item">情報の点在 / 定義ズレ / 入力負荷の確認</div>
+            <div class="process-step__item">根本原因レポート提示</div>
+            <div class="process-step__item">概算費用・期間を提示</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal delay-1">
+        <div class="process-step__num">3</div>
+        <div class="process-step__content">
+          <div class="process-step__period">Week 3〜4</div>
+          <h3 class="process-step__title">正本づくり（2週間）</h3>
+          <p class="process-step__desc">AIを入れる前の土台作り。情報の集約、言葉の定義合意、入力負荷の削減。</p>
+          <div class="process-step__items">
+            <div class="process-step__item">情報をバラバラから1か所に集約</div>
+            <div class="process-step__item">「完了」「進行中」「保留」の定義を全員で合意</div>
+            <div class="process-step__item">自動化できる入力を削減</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal delay-1">
+        <div class="process-step__num">4</div>
+        <div class="process-step__content">
+          <div class="process-step__period">Week 5〜6</div>
+          <h3 class="process-step__title">30点の試作</h3>
+          <p class="process-step__desc">完璧じゃないけど、触れる状態を作ります。核心機能だけに絞り、まず「感触」を確かめます。</p>
+          <div class="process-step__items">
+            <div class="process-step__item">2週間で実際に触れる状態に</div>
+            <div class="process-step__item">一緒に見て、方向性を確認</div>
+            <div class="process-step__item">「違う」なら即方向転換</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal delay-1">
+        <div class="process-step__num">5</div>
+        <div class="process-step__content">
+          <div class="process-step__period">Week 7〜12</div>
+          <h3 class="process-step__title">一緒に120点へ</h3>
+          <p class="process-step__desc">2週間ごとに改善版を見せながら、段階的に機能を追加します。色分け → アラート → AI予測と進化。</p>
+          <div class="process-step__items">
+            <div class="process-step__item">前回の反応を反映した改善版を提示</div>
+            <div class="process-step__item">Week 7-8: 色分け・フィルター</div>
+            <div class="process-step__item">Week 9-10: アラート機能</div>
+            <div class="process-step__item">Week 11-12: AI予測機能</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal delay-1">
+        <div class="process-step__num">∞</div>
+        <div class="process-step__content">
+          <div class="process-step__period">Week 13〜</div>
+          <h3 class="process-step__title">運用しながら、育てる</h3>
+          <p class="process-step__desc">「納品して終わり」には絶対にしません。ずっと一緒にいます。</p>
+          <div class="process-step__items">
+            <div class="process-step__item">月1回の定例MTG</div>
+            <div class="process-step__item">困った時の即対応</div>
+            <div class="process-step__item">一緒に改善を続ける</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Price -->
+    <div style="margin-top:80px;" class="reveal">
+      <p class="section-label">PRICING</p>
+      <h3 class="section-title" style="font-size:28px;">価格の透明性</h3>
+    </div>
+    <div class="price-grid reveal delay-1">
+      <div class="price-card">
+        <div class="price-card__phase">Phase 1</div>
+        <div class="price-card__title">現場診断</div>
+        <div class="price-card__amount">無料<span></span></div>
+        <div class="price-card__unit">Week 1〜2</div>
+        <div class="price-card__items">
+          <div class="price-card__item">初回対話（90分）</div>
+          <div class="price-card__item">現場訪問・診断</div>
+          <div class="price-card__item">根本原因レポート作成</div>
+          <div class="price-card__item">解決策・見積もり提示</div>
+        </div>
+        <p class="price-card__note">ここまで無料。納得してから次へ。</p>
+      </div>
+      <div class="price-card">
+        <div class="price-card__phase">Phase 2</div>
+        <div class="price-card__title">正本づくり＋試作</div>
+        <div class="price-card__amount">50<span>万円〜</span></div>
+        <div class="price-card__unit">Week 3〜6</div>
+        <div class="price-card__items">
+          <div class="price-card__item">情報の集約・整理</div>
+          <div class="price-card__item">言葉の定義の明確化</div>
+          <div class="price-card__item">30点試作の作成</div>
+          <div class="price-card__item">2回の確認MTG</div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card__phase">Phase 3</div>
+        <div class="price-card__title">一緒に120点へ</div>
+        <div class="price-card__amount">80<span>万円〜</span></div>
+        <div class="price-card__unit">Week 7〜12</div>
+        <div class="price-card__items">
+          <div class="price-card__item">2週間ごとの改善サイクル</div>
+          <div class="price-card__item">機能追加（色分け〜AI予測）</div>
+          <div class="price-card__item">運用開始サポート（1ヶ月）</div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card__phase">Phase 4</div>
+        <div class="price-card__title">継続伴走</div>
+        <div class="price-card__amount">10<span>万円〜/月</span></div>
+        <div class="price-card__unit">運用開始後</div>
+        <div class="price-card__items">
+          <div class="price-card__item">月1回の定例MTG</div>
+          <div class="price-card__item">困った時の即対応</div>
+          <div class="price-card__item">機能追加・改善</div>
+          <div class="price-card__item">効果測定レポート</div>
+        </div>
+        <p class="price-card__note">いつでも解約可能</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     8. CEO MESSAGE
+     ============================================================ -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="ceo-full__inner">
+      <div class="ceo-full__photo reveal reveal-left">
+        <div class="ceo-full__photo-img"></div>
+        <div class="ceo-full__name">菊地 雅克</div>
+        <div class="ceo-full__role">代表取締役</div>
+      </div>
+      <div class="ceo-full__message reveal reveal-right">
+        <p class="section-label section-label--white">CEO MESSAGE</p>
+        <h3>「30点でいい。<br>でも、順序は守る」</h3>
+        <p>AI導入で失敗する会社を、たくさん見てきました。<br>なぜ失敗するのか？<span class="highlight">「いきなりAI」から始めるからです。</span></p>
+        <p>情報が点在している。言葉の定義がズレている。データの信頼性が低い。<br>その状態でAIを入れても、ゴミデータを処理するだけです。</p>
+        <hr>
+        <p>だから、ソウルシンクスは<span class="highlight">「順序」にこだわります。</span></p>
+        <p>まず、現場を見る。根本原因を特定する。正本を作る。その上で、AIを使う。<br>遠回りに見えますが、これが最短ルートです。</p>
+        <hr>
+        <p>そして、私たちは「30点でも見せる」を徹底しています。<br>完璧を待つのではなく、早く見せて、一緒に育てる。</p>
+        <p>未完成を見せる勇気が、お客様との信頼を作ります。</p>
+        <hr>
+        <p>開発中も、運用後も、私たちはずっと隣にいます。<br>「曖昧にしない」「順序を守る」「一緒に育てる」<br>これが、ソウルシンクスの伴走です。</p>
+        <p>あなたの会社の「見えない壁」を、一緒に消しましょう。</p>
+        <div class="ceo-full__sig">菊地 雅克</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     9. CTA
+     ============================================================ -->
+<section class="section cta-section">
+  <div class="container">
+    <div class="cta-section__content reveal">
+      <p class="section-label section-label--white">GET STARTED</p>
+      <h2 class="cta-section__title">まずは、90分の<br>無料相談から。</h2>
+      <p class="cta-section__desc">
+        強引な営業は一切しません。<br>「やらない」という選択もOKです。
+      </p>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-md);padding:32px;margin-bottom:40px;text-align:left;">
+        <p style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:.1em;margin-bottom:16px;">この相談でお話しすること</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="font-size:14px;color:rgba(255,255,255,0.8);display:flex;gap:8px;"><span style="color:var(--teal-light);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;display:inline-block;"><polyline points="20 6 9 17 4 12"/></svg></span>あなたの会社の「見えない壁」</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.8);display:flex;gap:8px;"><span style="color:var(--teal-light);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;display:inline-block;"><polyline points="20 6 9 17 4 12"/></svg></span>根本原因の仮説</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.8);display:flex;gap:8px;"><span style="color:var(--teal-light);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;display:inline-block;"><polyline points="20 6 9 17 4 12"/></svg></span>現場診断の進め方</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.8);display:flex;gap:8px;"><span style="color:var(--teal-light);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;display:inline-block;"><polyline points="20 6 9 17 4 12"/></svg></span>概算の費用と期間</div>
+        </div>
+      </div>
+      <div class="cta-section__buttons">
+        <a href="contact.html?type=ax" class="btn btn--primary btn--lg">今すぐ相談を予約する</a>
+        <a href="contact.html?type=bank" class="btn btn--outline" style="font-size:13px;">銀行ご担当者様専用ページ（千葉銀行 融資実績1.4億円）</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <img src="images/logo.png" alt="Soul Sync's" class="footer__logo-img">
+        <div class="footer__logo-sub">株式会社ソウルシンクス</div>
+        <p class="footer__tagline">30点でいい。一緒に120点にしよう。</p>
+      </div>
+      <div>
+        <p class="footer__heading">SERVICES</p>
+        <ul class="footer__links">
+          <li><a href="ax.html" class="footer__link">AXソリューション事業</a></li>
+          <li><a href="renk.html" class="footer__link">Re:nk 人材開発事業</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__heading">COMPANY</p>
+        <ul class="footer__links">
+          <li><a href="about.html" class="footer__link">会社概要</a></li>
+          <li><a href="about.html#ceo" class="footer__link">代表メッセージ</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__heading">CONTACT</p>
+        <ul class="footer__links">
+          <li><a href="contact.html?type=ax" class="footer__link">AXソリューションの相談</a></li>
+          <li><a href="contact.html" class="footer__link">お問い合わせ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">&copy; 2026 SoulSyncs Inc. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+
+<!-- 右下追随ソウルくん -->
+<div class="soul-float" id="soulFloat">
+  <div class="soul-float__bubble">無料相談受付中！</div>
+  <a href="contact.html">
+    <img src="images/soul-kun.png" alt="ソウルくん">
+  </a>
+</div>
+
+</body>
+</html>
